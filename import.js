@@ -5,11 +5,20 @@ const data = require('./data/winemag-data-130k-v2.json'); // have mercy on my so
 
 const utils = require('util');
 const elasticsearch = require('elasticsearch');
+const AWS = require('aws-sdk');
+const connectionClass = require('http-aws-es');
+
+AWS.config.region = "eu-west-2";
 
 const getESClient = () => (
     new elasticsearch.Client({
-      host: `${process.env.ES_HOST || 'localhost'}:${process.env.ES_PORT || '9200'}`,
-      //log: 'trace'
+      host: `${process.env.ES_HOST || 'localhost'}:${process.env.ES_PORT || ''}`,
+      log: 'error',
+      connectionClass: connectionClass,
+      amazonES: {
+        credentials: new AWS.EnvironmentCredentials('AWS')
+      },
+      requestTimeout: 100000,
   })
 );
 
@@ -47,15 +56,19 @@ const indexData = (client, entries) => {
   //500 at the time!  i actually managed to ALL the RAM by trying to do all at once
   const chunks = chunk(data, 500);
   console.log('chunks:', chunks.length);
-  const promises = chunks.map(chunk => (
-      new Promise((resolve, reject) => (
-          indexData(
-            client,
-            formatDataToES(chunk)
-          ).then(resolve)
-      )
-  )));
 
-  //error handling? pft.
-  await Promise.all(promises);
+  let idx = 0;
+  for (const chunk of chunks) {
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        indexData(
+          client,
+          formatDataToES(chunk)
+        )
+        .then(() => console.log("chunk", idx + "/" + chunks.length))
+        .then(() => idx++)
+        .then(resolve, reject);
+      }, 1000)
+    })
+  }
 })();

@@ -1,0 +1,25 @@
+{
+  "name": "wine-search",
+  "version": "1.0.0",
+  "description": "## import",
+  "main": "import.js",
+  "dependencies": {
+    "aws-sdk": "^2.320.0",
+    "elasticsearch": "^15.1.1",
+    "http-aws-es": "^6.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/errietta/wines.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/errietta/wines/issues"
+  },
+  "homepage": "https://github.com/errietta/wines#readme"
+}
