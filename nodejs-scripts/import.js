@@ -1,9 +1,7 @@
 'use strict';
 
+const data = require('../data/winemag-data-130k-v2.json'); // have mercy on my soul
 
-const data = require('./data/winemag-data-130k-v2.json'); // have mercy on my soul
-
-const utils = require('util');
 const elasticsearch = require('elasticsearch');
 const AWS = require('aws-sdk');
 const connectionClass = require('http-aws-es');
