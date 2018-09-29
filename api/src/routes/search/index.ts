@@ -22,24 +22,26 @@ const searchRoutes = (state: RouteState) => {
           "multi_match" : {
             "query": search,
             "fields": [
-              "title^2",
-              "variety",
-              "region_1",
-              "region_2",
-              "province",
-              "country",
+              "title",
+              "variety^2",
+              "region_1^2",
+              "region_2^2",
+              "province^2",
+              "country^2",
               "winery",
               "description",
               "description.english",
-            ]
-          }
+            ],
+            "minimum_should_match": "75%",
+          },
         },
         "highlight": {
           "fields": {
             "description.english": {}
           },
           "number_of_fragments": 0,
-        }
+        },
+        "size": 10
       }
     });
     console.log(util.inspect(response, { depth: null }));
