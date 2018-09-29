@@ -14,9 +14,11 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@vue/cli-plugin-babel": "^3.0.4",
     "@vue/cli-plugin-typescript": "^3.0.4",
     "@vue/cli-service": "^3.0.4",
+    "tslint": "^5.11.0",
     "typescript": "^3.0.0",
     "vue-template-compiler": "^2.5.17"
   }
