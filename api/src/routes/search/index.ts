@@ -11,7 +11,7 @@ const searchRoutes = (state: RouteState) => {
   router.post('/', async (req, res) => {
     const search = req.body.search;
     if (!search) {
-      return res.status(402).json({'error': 'no search body'});
+      return res.status(422).json({'error': 'no search body'});
     }
 
     const client = state.esClient;
