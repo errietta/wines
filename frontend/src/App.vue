@@ -5,27 +5,51 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <!-- <Footer /> -->
   </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import Footer from '@/views/Footer.vue';
+
+@Component({
+  components: {
+    Footer,
+  },
+})
+export default class App extends Vue {}
+</script>
+
 <style>
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-color: #191825;
+  color: white;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100%;
+  margin-bottom: -40px;
 }
 #nav {
   padding: 30px;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  color: rgb(255, 247, 247);
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  font-weight: bold;
+  color: white;
 }
 </style>
