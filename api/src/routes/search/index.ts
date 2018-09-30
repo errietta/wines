@@ -11,7 +11,7 @@ const searchRoutes = (state: RouteState) => {
   router.post('/', async (req, res) => {
     const search = req.body.search;
     if (!search) {
-      return res.status(402).json({'error': 'no search body'});
+      return res.status(422).json({'error': 'no search body'});
     }
 
     const client = state.esClient;
@@ -22,24 +22,27 @@ const searchRoutes = (state: RouteState) => {
           "multi_match" : {
             "query": search,
             "fields": [
-              "title^2",
-              "variety",
-              "region_1",
-              "region_2",
-              "province",
-              "country",
+              "title",
+              "variety^2",
+              "region_1^2",
+              "region_2^2",
+              "province^2",
+              "country^2",
               "winery",
               "description",
               "description.english",
-            ]
-          }
+            ],
+            "minimum_should_match": "75%",
+          },
         },
         "highlight": {
           "fields": {
-            "description.english": {}
+            "description.english": {},
+            "title": {},
           },
           "number_of_fragments": 0,
-        }
+        },
+        "size": 10
       }
     });
     console.log(util.inspect(response, { depth: null }));
@@ -50,6 +53,7 @@ const searchRoutes = (state: RouteState) => {
       total: response.hits.total,
       max_score: response.hits.max_score,
       results: response.hits.hits.map(hit => ({
+        id: hit._id,
         score: hit._score,
         review: { ...hit._source },
         highlight: hit.highlight,
