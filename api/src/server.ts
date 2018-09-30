@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
@@ -14,6 +15,8 @@ const setupApp = (): core.Express => {
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
+  app.options('*', cors())
+  app.use(cors());
 
   return app;
 };
