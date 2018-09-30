@@ -53,6 +53,7 @@ const searchRoutes = (state: RouteState) => {
       total: response.hits.total,
       max_score: response.hits.max_score,
       results: response.hits.hits.map(hit => ({
+        id: hit._id,
         score: hit._score,
         review: { ...hit._source },
         highlight: hit.highlight,
