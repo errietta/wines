@@ -37,7 +37,8 @@ const searchRoutes = (state: RouteState) => {
         },
         "highlight": {
           "fields": {
-            "description.english": {}
+            "description.english": {},
+            "title": {},
           },
           "number_of_fragments": 0,
         },
